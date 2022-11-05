@@ -3,7 +3,7 @@ pipeline {
         registry = "novareej/tp-devops"
         registryCredential = 'dockerhub'
         dockerImage = ''
-        BRANCH_NAME = "${GIT_BRANCH.split("/")[1]}"
+        BRANCH_NAME = "main"
     }
     agent any
         stages {
