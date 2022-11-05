@@ -1,31 +1,31 @@
 pipeline {
-environment {
-registry = "novareej/tp-devops"
-registryCredential = 'dockerhub'
-dockerImage = ''
+    environment {
+    registry = "novareej/tp-devops"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
 }
-agent any
-stages {
-stage('Cloning Git') {
-steps {
-git 'https://github.com/Novareej/Tp-Devops.git'
-}
-}
-stage('Building image') {
-steps{
-script {
-dockerImage = docker.build registry + ":$BUILD_NUMBER"
-}
-}
-}
-stage('Publish Image') {
-    steps{
-        script {
-            docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
+    agent any
+        stages {
+            stage('Cloning Git') {
+                steps {
+                    git 'https://github.com/Novareej/Tp-Devops.git'
+                }
+            }
+            stage('Building image') {
+                steps{
+                    script {
+                        dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    }
+                }
+            }
+            stage('Publish Image') {
+                steps{
+                    script {
+                        docker.withRegistry( '', registryCredential ) {
+                            dockerImage.push()
+                        }
+                    }
+                }
+            }
         }
-    }
-}
-}
-}
 }
